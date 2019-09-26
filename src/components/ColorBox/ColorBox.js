@@ -1,14 +1,33 @@
 import React from 'react'
-import './ColorBox.scss'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import useAsyncState from '../utils/useAsyncState'
+import './ColorBox.scss'
 
 const ColorBox = props => {
+  const [copied, setCopied] = useAsyncState(false)
+
   const { background, name } = props
 
-  console.log(props)
+  const changeCopyState = async () => {
+    const newCopiedVal = await setCopied(true)
+
+    setTimeout(() => {
+      setCopied(!newCopiedVal)
+    }, 1500)
+  }
   return (
-    <CopyToClipboard text={background}>
-      <div style={{ background: `${background}` }} className="ColorBox">
+    <CopyToClipboard text={background} onCopy={changeCopyState}>
+      <div className="ColorBox" style={{ background: `${background}` }}>
+        <div
+          className={`copy-overlay ${copied && 'show'}`}
+          style={{ background: `${background}` }}
+        />
+
+        <div className={`copy-msg ${copied && 'show'}`}>
+          <h1>copied!</h1>
+          <p>{background}</p>
+        </div>
+
         <div className="copy-container">
           <div className="box-content">
             <span>{name}</span>
