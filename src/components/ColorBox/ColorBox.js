@@ -1,6 +1,6 @@
 import React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import useAsyncState from '../utils/useAsyncState'
+import useAsyncState from '../../utils/useAsyncState'
 import './ColorBox.scss'
 
 const ColorBox = props => {
