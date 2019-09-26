@@ -1,19 +1,19 @@
 import React from 'react'
-import './Pallete.scss'
+import './Palette.scss'
 import ColorBox from '../ColorBox/ColorBox'
 
-const Pallete = props => {
-  const colorBoxes = props.pallete.colors.map(color => (
+const Palette = props => {
+  const colorBoxes = props.palette.colors.map(color => (
     <ColorBox background={color.color} name={color.name} />
   ))
   console.log(colorBoxes)
   return (
-    <div className="Pallete">
+    <div className="Palette">
       {/* navbar */}
-      <div className="Pallete-colors">{colorBoxes}</div>
+      <div className="Palette-colors">{colorBoxes}</div>
       {/* footer */}
     </div>
   )
 }
 
-export default Pallete
+export default Palette
