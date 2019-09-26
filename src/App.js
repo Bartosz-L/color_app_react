@@ -4,10 +4,11 @@ import seedColors from './seedColors'
 import { generatePalette } from './utils/colorHelpers'
 
 function App() {
-  console.log(generatePalette(seedColors[4]))
+  const palette = generatePalette(seedColors[4])
+
   return (
     <div>
-      <Palette palette={seedColors[4]} />
+      <Palette palette={palette} />
     </div>
   )
 }
