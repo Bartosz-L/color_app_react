@@ -15,7 +15,11 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" render={() => <PaletteList palettes={seedColors} />} />
+        <Route
+          exact
+          path="/"
+          render={routeProps => <PaletteList palettes={seedColors} routerProps={routeProps} />}
+        />
         <Route
           exact
           path="/palette/:id"

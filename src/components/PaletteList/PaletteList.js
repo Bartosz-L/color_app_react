@@ -1,6 +1,5 @@
 import React from 'react'
 import './PaletteList.scss'
-import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/styles'
 import MiniPalette from '../MiniPalette/MiniPalette'
 
@@ -35,7 +34,15 @@ const styles = {
 }
 
 const PaletteList = props => {
-  const { palettes, classes } = props
+  const {
+    palettes,
+    classes,
+    routerProps: { history },
+  } = props
+
+  const goToPalette = id => {
+    history.push(`/palette/${id}`)
+  }
 
   return (
     <div className={classes.root}>
@@ -45,7 +52,13 @@ const PaletteList = props => {
         </nav>
         <div className={classes.palettes}>
           {palettes.map(palette => (
-            <MiniPalette {...palette} />
+            <MiniPalette
+              paletteName={palette.paletteName}
+              emoji={palette.emoji}
+              colors={palette.colors}
+              goToPalette={() => goToPalette(palette.id)}
+              key={palette.id}
+            />
           ))}
         </div>
       </div>
