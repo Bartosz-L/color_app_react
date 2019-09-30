@@ -11,7 +11,7 @@ const Navbar = props => {
   const [colorFormat, setColorFormat] = useAsyncState('hex')
   const [openSnackbar, setOpenSnackbar] = useAsyncState(false)
 
-  const { level, changeLevel, changeColorFormat } = props
+  const { level, changeLevel, changeColorFormat, isSingleColor } = props
 
   const handleFormatChange = async e => {
     const newColorFormat = await setColorFormat(e.target.value)
@@ -28,12 +28,21 @@ const Navbar = props => {
       <div className="logo">
         <Link to="/">reactcolorpicker</Link>
       </div>
-      <div className="slider-container">
-        <span>Level: {level}</span>
-        <div className="slider">
-          <Slider defaultValue={level} min={100} max={900} step={100} onAfterChange={changeLevel} />
+      {!isSingleColor && (
+        <div className="slider-container">
+          <span>Level: {level}</span>
+          <div className="slider">
+            <Slider
+              defaultValue={level}
+              min={100}
+              max={900}
+              step={100}
+              onAfterChange={changeLevel}
+            />
+          </div>
         </div>
-      </div>
+      )}
+
       <div className="select-container">
         <Select value={colorFormat} onChange={handleFormatChange}>
           <MenuItem value="hex">HEX - #ffffff</MenuItem>
