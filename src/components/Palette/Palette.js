@@ -17,7 +17,7 @@ const Palette = props => {
   }
 
   const colorBoxes = colors[level].map(color => (
-    <ColorBox background={color[colorFormat]} name={color.name} />
+    <ColorBox background={color[colorFormat]} name={color.name} key={color.name} />
   ))
 
   return (
