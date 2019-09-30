@@ -5,14 +5,14 @@ import MiniPalette from '../MiniPalette/MiniPalette'
 
 const styles = {
   root: {
-    backgroundColor: 'rgb(102, 153, 255)',
+    backgroundColor: 'white',
     height: '100vh',
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'center',
   },
   container: {
-    width: '50%',
+    width: '70%',
     display: 'flex',
     alignItems: 'flex-start',
     flexDirection: 'column',
