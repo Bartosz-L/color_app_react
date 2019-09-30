@@ -22,6 +22,7 @@ const Palette = props => {
       name={color.name}
       key={color.id}
       singlePaletteURL={`/palette/${id}/${color.id}`}
+      showLink
     />
   ))
 

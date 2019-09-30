@@ -7,7 +7,7 @@ import './ColorBox.scss'
 const ColorBox = props => {
   const [copied, setCopied] = useAsyncState(false)
 
-  const { background, name, singlePaletteURL } = props
+  const { background, name, singlePaletteURL, showLink } = props
 
   const changeCopyState = async () => {
     const newCopiedVal = await setCopied(true)
@@ -32,9 +32,11 @@ const ColorBox = props => {
             Copy
           </button>
         </div>
-        <Link to={singlePaletteURL} onClick={e => e.stopPropagation()}>
-          <span className="see-more">More</span>
-        </Link>
+        {showLink && (
+          <Link to={singlePaletteURL} onClick={e => e.stopPropagation()}>
+            <span className="see-more">More</span>
+          </Link>
+        )}
       </div>
     </CopyToClipboard>
   )
