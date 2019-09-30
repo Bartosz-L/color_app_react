@@ -17,7 +17,8 @@
     "import/no-unresolved": 1,
     "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
     "react/prop-types": 0,
-    "react/destructuring-assignment": 0
+    "react/destructuring-assignment": 0,
+    "react/jsx-props-no-spreading": 0
   },
   "settings": {
     "import/resolver": {
