@@ -1,7 +1,9 @@
 {
-  "extends": ["airbnb", "prettier", "prettier/react"],
+  "extends": ["airbnb", "prettier", "prettier/react", "plugin:react/recommended"],
+  "plugins": ["react-hooks", "import", "jsx-a11y", "react"],
   "parser": "babel-eslint",
   "env": {
+    "browser": true,
     "jest": true
   },
   "globals": {
@@ -12,12 +14,15 @@
     "no-console": 0,
     "no-unused-vars": 0,
     "no-underscore-dangle": 0,
+    "no-param-reassign": 0,
     "import/prefer-default-export": 0,
     "import/no-extraneous-dependencies": 0,
     "import/no-unresolved": 1,
     "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
     "react/prop-types": 0,
-    "react/destructuring-assignment": 0
+    "react/destructuring-assignment": 0,
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   },
   "settings": {
     "import/resolver": {
