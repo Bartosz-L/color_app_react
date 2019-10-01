@@ -3,15 +3,16 @@ import Slider from 'rc-slider'
 import { Link } from 'react-router-dom'
 import { Select, MenuItem, Snackbar, IconButton } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
+import { withStyles } from '@material-ui/styles'
 import 'rc-slider/assets/index.css'
-import './Navbar.scss'
 import useAsyncState from '../../utils/useAsyncState'
+import styles from '../../styles/Navbar.styles'
 
 const Navbar = props => {
   const [colorFormat, setColorFormat] = useAsyncState('hex')
   const [openSnackbar, setOpenSnackbar] = useAsyncState(false)
 
-  const { level, changeLevel, changeColorFormat, isSingleColor } = props
+  const { level, changeLevel, changeColorFormat, isSingleColor, classes } = props
 
   const handleFormatChange = async e => {
     const newColorFormat = await setColorFormat(e.target.value)
@@ -24,14 +25,14 @@ const Navbar = props => {
   }
 
   return (
-    <header className="Navbar">
-      <div className="logo">
+    <header className={classes.Navbar}>
+      <div className={classes.logo}>
         <Link to="/">reactcolorpicker</Link>
       </div>
       {!isSingleColor && (
-        <div className="slider-container">
+        <div>
           <span>Level: {level}</span>
-          <div className="slider">
+          <div className={classes.slider}>
             <Slider
               defaultValue={level}
               min={100}
@@ -43,7 +44,7 @@ const Navbar = props => {
         </div>
       )}
 
-      <div className="select-container">
+      <div className={classes.selectContainer}>
         <Select value={colorFormat} onChange={handleFormatChange}>
           <MenuItem value="hex">HEX - #ffffff</MenuItem>
           <MenuItem value="rgb">RGB - rgb(255,255,255)</MenuItem>
@@ -72,4 +73,4 @@ const Navbar = props => {
   )
 }
 
-export default Navbar
+export default withStyles(styles)(Navbar)
