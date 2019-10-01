@@ -6,6 +6,7 @@ export default {
     justifyContent: 'flex-end',
     alignItems: 'center',
     fontWeight: 'bold',
+    color: 'rgba(0,0,0,0.7)',
   },
   emoji: {
     fontSize: '1.5rem',

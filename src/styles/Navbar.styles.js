@@ -10,13 +10,13 @@ export default {
     padding: '0 13px',
     fontSize: '22px',
     backgroundColor: '#eceff1',
-    fontFamily: "'Roboto', sans-serif",
     height: '100%',
     display: 'flex',
     alignItems: 'center',
+    color: 'rgba(0,0,0,0.7)',
     '& a': {
       textDecoration: 'none',
-      color: 'black',
+      color: 'rgba(0,0,0,0.7)',
     },
   },
   slider: {

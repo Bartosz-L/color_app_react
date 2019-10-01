@@ -20,7 +20,7 @@ export default {
     justifyContent: 'space-between',
     alignItems: 'center',
     margin: '0',
-    color: 'black',
+    color: 'rgba(0,0,0,0.7)',
     paddingTop: '0.5rem',
     fontSize: '1rem',
     position: 'relative',
