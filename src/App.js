@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Palette from './components/Palette/Palette'
 import PaletteList from './components/PaletteList/PaletteList'
 import SingleColorPalette from './components/SingleColorPalette/SingleColorPalette'
-import NewPaletteForm from './components/NewPaletteForm/NewPaletteForm'
+import NewPaletteForm from './components/NewPalette/NewPaletteForm'
 import seedColors from './seedColors'
 import { generatePalette } from './utils/colorHelpers'
 
