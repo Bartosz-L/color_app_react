@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
-import './Palette.scss'
+import { withStyles } from '@material-ui/styles'
 import ColorBox from '../ColorBox/ColorBox'
 import Navbar from '../Navbar/Navbar'
 import Footer from '../Footer/Footer'
+import styles from '../../styles/Palette.styles'
 
 const Palette = props => {
   const [level, setLevel] = useState(500)
   const [colorFormat, setColorFormat] = useState('hex')
   const { colors, paletteName, emoji, id } = props.palette
+  const { classes } = props
 
   const changeLevel = newLevel => {
     setLevel(newLevel)
@@ -28,17 +30,17 @@ const Palette = props => {
   ))
 
   return (
-    <div className="Palette">
+    <div className={classes.Palette}>
       <Navbar
         level={level}
         changeLevel={changeLevel}
         changeColorFormat={changeColorFormat}
         isSingleColor={false}
       />
-      <div className="Palette-colors">{colorBoxes}</div>
+      <div className={classes.PaletteColors}>{colorBoxes}</div>
       <Footer paletteName={paletteName} emoji={emoji} />
     </div>
   )
 }
 
-export default Palette
+export default withStyles(styles)(Palette)

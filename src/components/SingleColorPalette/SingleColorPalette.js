@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { withStyles } from '@material-ui/styles'
 import ColorBox from '../ColorBox/ColorBox'
 import Navbar from '../Navbar/Navbar'
 import Footer from '../Footer/Footer'
+import styles from '../../styles/Palette.styles'
 
 const SingleColorPalette = props => {
   const [shades, setShades] = useState([])
   const [colorFormat, setColorFormat] = useState('hex')
 
-  const { palette, colorId } = props
+  const { palette, colorId, classes } = props
 
   const gatherShades = (wholePalette, colorToFilterBy) => {
     // return all shades of given color
@@ -40,14 +42,12 @@ const SingleColorPalette = props => {
   ))
 
   return (
-    <div className="SingleColorPalette Palette">
+    <div className={classes.Palette}>
       <Navbar changeColorFormat={changeColorFormat} isSingleColor />
-      <div className="Palette-colors">
+      <div className={classes.PaletteColors}>
         {colorBoxes}
-        <div className="ColorBox go-back">
-          <Link className="back-button" to={`/palette/${palette.id}`}>
-            GO BACK
-          </Link>
+        <div className={classes.goBack}>
+          <Link to={`/palette/${palette.id}`}>GO BACK</Link>
         </div>
       </div>
       <Footer paletteName={palette.paletteName} emoji={palette.emoji} />
@@ -55,4 +55,4 @@ const SingleColorPalette = props => {
   )
 }
 
-export default SingleColorPalette
+export default withStyles(styles)(SingleColorPalette)
