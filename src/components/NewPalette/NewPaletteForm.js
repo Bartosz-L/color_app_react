@@ -17,8 +17,9 @@ import {
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import DraggableColorBox from './DraggableColorBox'
+import DraggableColorList from './DraggableColorList'
 import ErrorSnackbar from '../Snackbar/Snackbar'
+import arrayMove from 'array-move'
 
 const drawerWidth = 400
 
@@ -171,6 +172,10 @@ const NewPaletteForm = props => {
     }
   }
 
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    setColors(arrayMove(colors, oldIndex, newIndex))
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -269,14 +274,12 @@ const NewPaletteForm = props => {
         })}
       >
         <div className={classes.drawerHeader} />
-        {colors.map(color => (
-          <DraggableColorBox
-            color={color.color}
-            name={color.name}
-            key={color.name}
-            handleRemoveBox={() => handleRemoveBox(color.name)}
-          />
-        ))}
+        <DraggableColorList
+          colors={colors}
+          handleRemoveBox={handleRemoveBox}
+          axis="xy"
+          onSortEnd={onSortEnd}
+        />
         <ErrorSnackbar
           open={openSnackbar}
           handleCloseSnackBar={handleCloseSnackBar}
