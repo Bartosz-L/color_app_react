@@ -92,7 +92,6 @@ const NewPaletteForm = props => {
     maxColors,
   } = props
 
-  const paletteIsFull = colors.length >= maxColors
   const classes = useStyles()
   const theme = useTheme()
   const [open, setOpen] = useState(false)
@@ -102,6 +101,7 @@ const NewPaletteForm = props => {
   const [newPaletteName, setNewPaletteName] = useState('')
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const paletteIsFull = colors.length >= maxColors
 
   const handleAddNewColor = async e => {
     e.preventDefault()
