@@ -89,12 +89,15 @@ const NewPaletteForm = props => {
     routerProps: { history },
     savePalette,
     palettes,
+    maxColors,
   } = props
+
+  const paletteIsFull = colors.length >= maxColors
   const classes = useStyles()
   const theme = useTheme()
   const [open, setOpen] = useState(false)
   const [currentColor, setCurrentColor] = useAsyncState('teal')
-  const [colors, setColors] = useAsyncState([{ color: 'blue', name: 'blue' }])
+  const [colors, setColors] = useAsyncState(palettes[0].colors)
   const [newColorName, setNewColorName] = useAsyncState('')
   const [newPaletteName, setNewPaletteName] = useState('')
   const [openSnackbar, setOpenSnackbar] = useState(false)
@@ -176,6 +179,19 @@ const NewPaletteForm = props => {
     setColors(arrayMove(colors, oldIndex, newIndex))
   }
 
+  const clearColors = () => {
+    setColors([])
+  }
+
+  const addRandomColor = () => {
+    // pick random color from existing palettes
+    const allColors = palettes.map(p => p.colors).flat()
+    let randomNumber = Math.floor(Math.random() * allColors.length)
+    const randomColor = allColors[randomNumber]
+
+    setColors([...colors, randomColor])
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -234,10 +250,15 @@ const NewPaletteForm = props => {
         <Typography variant="h4">Design Your Palette</Typography>
 
         <div>
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" onClick={clearColors}>
             Clear Palette
           </Button>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={addRandomColor}
+            disabled={paletteIsFull}
+          >
             Random Color
           </Button>
         </div>
@@ -260,11 +281,12 @@ const NewPaletteForm = props => {
           <Button
             variant="contained"
             color="primary"
-            style={{ backgroundColor: currentColor }}
+            style={{ backgroundColor: paletteIsFull ? 'grey' : currentColor }}
             type="submit"
             size="small"
+            disabled={paletteIsFull}
           >
-            Add Color
+            {paletteIsFull ? 'Palette Full' : 'Add Color'}
           </Button>
         </form>
       </Drawer>
@@ -288,6 +310,10 @@ const NewPaletteForm = props => {
       </main>
     </div>
   )
+}
+
+NewPaletteForm.defaultProps = {
+  maxColors: 20,
 }
 
 export default NewPaletteForm
