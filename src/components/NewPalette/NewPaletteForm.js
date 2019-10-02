@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { ChromePicker } from 'react-color'
+import useAsyncState from '../../utils/useAsyncState'
 import clsx from 'clsx'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import {
@@ -11,11 +12,13 @@ import {
   Divider,
   IconButton,
   Button,
+  TextField,
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import DraggableColorBox from './DraggableColorBox'
+import ErrorSnackbar from '../Snackbar/Snackbar'
 
 const drawerWidth = 400
 
@@ -74,17 +77,53 @@ const useStyles = makeStyles(theme => ({
     }),
     marginLeft: 0,
   },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
 }))
 
-const NewPaletteForm = () => {
+const NewPaletteForm = props => {
+  const {
+    routerProps: { history },
+    savePalette,
+  } = props
   const classes = useStyles()
   const theme = useTheme()
   const [open, setOpen] = useState(false)
-  const [currentColor, setCurrentColor] = useState('teal')
-  const [colors, setColors] = useState(['purple', '#e15764'])
+  const [currentColor, setCurrentColor] = useAsyncState('teal')
+  const [colors, setColors] = useAsyncState([{ color: 'blue', name: 'blue' }])
+  const [newName, setNewName] = useAsyncState('')
+  const [openSnackbar, setOpenSnackbar] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
-  const addNewColor = () => {
-    setColors([...colors, currentColor])
+  const handleAddNewColor = async e => {
+    e.preventDefault()
+    const newColor = {
+      color: currentColor,
+      name: newName,
+    }
+
+    const isColorNameUnique = colors.every(
+      ({ name }) => name.toLowerCase() !== newColor.name.toLowerCase(),
+    )
+    const isColorUnique = colors.every(({ color }) => color !== newColor.color)
+
+    if (isColorNameUnique && isColorUnique) {
+      await setColors([...colors, newColor])
+      await setNewName('')
+    } else if (!isColorNameUnique) {
+      setErrorMessage('Name is not unique')
+      setOpenSnackbar(true)
+    } else if (!isColorUnique) {
+      setErrorMessage('Color is already taken')
+      setOpenSnackbar(true)
+    }
   }
 
   const handleDrawerOpen = () => {
@@ -95,6 +134,28 @@ const NewPaletteForm = () => {
     setOpen(false)
   }
 
+  const handleChangeNewName = e => {
+    setNewName(e.target.value)
+  }
+
+  const handleCloseSnackBar = (e, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setOpenSnackbar(false)
+  }
+
+  const handleSavePalette = () => {
+    let newPaletteName = 'New Test Palette'
+    const newPalette = {
+      paletteName: newPaletteName,
+      id: newPaletteName.toLowerCase().replace(/ /g, '-'),
+      colors: colors,
+    }
+    savePalette(newPalette)
+    history.push('/')
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -103,6 +164,7 @@ const NewPaletteForm = () => {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
+        color="default"
       >
         <Toolbar>
           <IconButton
@@ -117,6 +179,9 @@ const NewPaletteForm = () => {
           <Typography variant="h6" noWrap>
             Persistent drawer
           </Typography>
+          <Button variant="contained" color="primary" onClick={handleSavePalette}>
+            Save Palette
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -151,14 +216,30 @@ const NewPaletteForm = () => {
           onChangeComplete={newColor => setCurrentColor(newColor.hex)}
         />
 
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ backgroundColor: currentColor }}
-          onClick={addNewColor}
-        >
-          Add Color
-        </Button>
+        <form className={classes.container} autoComplete="off" onSubmit={handleAddNewColor}>
+          <TextField
+            id="standard-name"
+            label="color name"
+            className={classes.textField}
+            value={newName}
+            onChange={handleChangeNewName}
+            margin="normal"
+            required
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ backgroundColor: currentColor }}
+            type="submit"
+          >
+            Add Color
+          </Button>
+        </form>
+        <ErrorSnackbar
+          open={openSnackbar}
+          handleCloseSnackBar={handleCloseSnackBar}
+          message={errorMessage}
+        />
       </Drawer>
       <main
         className={clsx(classes.content, {
@@ -166,9 +247,9 @@ const NewPaletteForm = () => {
         })}
       >
         <div className={classes.drawerHeader} />
-          {colors.map(color => (
-            <DraggableColorBox color={color} key={color} />
-          ))}
+        {colors.map(color => (
+          <DraggableColorBox color={color.color} name={color.name} key={color.color} />
+        ))}
       </main>
     </div>
   )
