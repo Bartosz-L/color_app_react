@@ -80,11 +80,6 @@ const useStyles = makeStyles(theme => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: 200,
-  },
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
   },
 }))
 
@@ -92,21 +87,24 @@ const NewPaletteForm = props => {
   const {
     routerProps: { history },
     savePalette,
+    palettes,
   } = props
   const classes = useStyles()
   const theme = useTheme()
   const [open, setOpen] = useState(false)
   const [currentColor, setCurrentColor] = useAsyncState('teal')
   const [colors, setColors] = useAsyncState([{ color: 'blue', name: 'blue' }])
-  const [newName, setNewName] = useAsyncState('')
+  const [newColorName, setNewColorName] = useAsyncState('')
+  const [newPaletteName, setNewPaletteName] = useState('')
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
 
+  console.log(palettes)
   const handleAddNewColor = async e => {
     e.preventDefault()
     const newColor = {
       color: currentColor,
-      name: newName,
+      name: newColorName,
     }
 
     const isColorNameUnique = colors.every(
@@ -116,7 +114,7 @@ const NewPaletteForm = props => {
 
     if (isColorNameUnique && isColorUnique) {
       await setColors([...colors, newColor])
-      await setNewName('')
+      await setNewColorName('')
     } else if (!isColorNameUnique) {
       setErrorMessage('Name is not unique')
       setOpenSnackbar(true)
@@ -135,7 +133,11 @@ const NewPaletteForm = props => {
   }
 
   const handleChangeNewName = e => {
-    setNewName(e.target.value)
+    setNewColorName(e.target.value)
+  }
+
+  const handleChangeNewPaletteName = e => {
+    setNewPaletteName(e.target.value)
   }
 
   const handleCloseSnackBar = (e, reason) => {
@@ -145,15 +147,25 @@ const NewPaletteForm = props => {
     setOpenSnackbar(false)
   }
 
-  const handleSavePalette = () => {
-    let newPaletteName = 'New Test Palette'
-    const newPalette = {
-      paletteName: newPaletteName,
-      id: newPaletteName.toLowerCase().replace(/ /g, '-'),
-      colors: colors,
+  const handleSavePalette = e => {
+    e.preventDefault()
+    let newPName = newPaletteName
+    const isPaletteNameUnique = palettes.every(
+      ({ paletteName }) => paletteName.toLowerCase() !== newPName.toLowerCase(),
+    )
+
+    if (isPaletteNameUnique) {
+      const newPalette = {
+        paletteName: newPName,
+        id: newPName.toLowerCase().replace(/ /g, '-'),
+        colors: colors,
+      }
+      savePalette(newPalette)
+      history.push('/')
+    } else {
+      setErrorMessage('Palette name is not unique')
+      setOpenSnackbar(true)
     }
-    savePalette(newPalette)
-    history.push('/')
   }
 
   return (
@@ -179,9 +191,20 @@ const NewPaletteForm = props => {
           <Typography variant="h6" noWrap>
             Persistent drawer
           </Typography>
-          <Button variant="contained" color="primary" onClick={handleSavePalette}>
-            Save Palette
-          </Button>
+          <form autoComplete="off" onSubmit={handleSavePalette} name="newPaletteName">
+            <TextField
+              id="newPaletteName"
+              label="palette name"
+              className={classes.textField}
+              value={newPaletteName}
+              onChange={handleChangeNewPaletteName}
+              margin="normal"
+              required
+            />
+            <Button type="submit" variant="contained" color="primary">
+              Save Palette
+            </Button>
+          </form>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -216,12 +239,12 @@ const NewPaletteForm = props => {
           onChangeComplete={newColor => setCurrentColor(newColor.hex)}
         />
 
-        <form className={classes.container} autoComplete="off" onSubmit={handleAddNewColor}>
+        <form autoComplete="off" onSubmit={handleAddNewColor} name="newColorName">
           <TextField
-            id="standard-name"
+            id="newColorName"
             label="color name"
             className={classes.textField}
-            value={newName}
+            value={newColorName}
             onChange={handleChangeNewName}
             margin="normal"
             required
@@ -231,15 +254,11 @@ const NewPaletteForm = props => {
             color="primary"
             style={{ backgroundColor: currentColor }}
             type="submit"
+            size="small"
           >
             Add Color
           </Button>
         </form>
-        <ErrorSnackbar
-          open={openSnackbar}
-          handleCloseSnackBar={handleCloseSnackBar}
-          message={errorMessage}
-        />
       </Drawer>
       <main
         className={clsx(classes.content, {
@@ -250,6 +269,11 @@ const NewPaletteForm = props => {
         {colors.map(color => (
           <DraggableColorBox color={color.color} name={color.name} key={color.color} />
         ))}
+        <ErrorSnackbar
+          open={openSnackbar}
+          handleCloseSnackBar={handleCloseSnackBar}
+          message={errorMessage}
+        />
       </main>
     </div>
   )
