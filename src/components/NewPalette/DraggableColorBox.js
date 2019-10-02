@@ -1,12 +1,16 @@
 import React from 'react'
 import { withStyles } from '@material-ui/styles'
 import styles from '../../styles/DraggableColorBox'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 const DraggableColorBox = props => {
   const { color, name, classes } = props
   return (
     <div className={classes.root} style={{ backgroundColor: color }}>
-      {color} / {name}
+      <div className={classes.boxContent}>
+        <span>{name}</span>
+        <DeleteIcon className={classes.deleteIcon} />
+      </div>
     </div>
   )
 }
