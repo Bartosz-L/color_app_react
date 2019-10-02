@@ -99,7 +99,6 @@ const NewPaletteForm = props => {
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
 
-  console.log(palettes)
   const handleAddNewColor = async e => {
     e.preventDefault()
     const newColor = {
@@ -145,6 +144,10 @@ const NewPaletteForm = props => {
       return
     }
     setOpenSnackbar(false)
+  }
+
+  const handleRemoveBox = colorName => {
+    setColors(colors.filter(color => color.name !== colorName))
   }
 
   const handleSavePalette = e => {
@@ -267,7 +270,12 @@ const NewPaletteForm = props => {
       >
         <div className={classes.drawerHeader} />
         {colors.map(color => (
-          <DraggableColorBox color={color.color} name={color.name} key={color.color} />
+          <DraggableColorBox
+            color={color.color}
+            name={color.name}
+            key={color.name}
+            handleRemoveBox={() => handleRemoveBox(color.name)}
+          />
         ))}
         <ErrorSnackbar
           open={openSnackbar}
