@@ -63,8 +63,13 @@ const PaletteFormNav = props => {
     history,
   } = props
   const [formShowing, setFormShowing] = useState(false)
+
   const showForm = () => {
     setFormShowing(true)
+  }
+
+  const hideForm = () => {
+    setFormShowing(false)
   }
 
   return (
@@ -111,6 +116,8 @@ const PaletteFormNav = props => {
           setErrorMessage={setErrorMessage}
           setOpenSnackbar={setOpenSnackbar}
           history={history}
+          hideForm={hideForm}
+          formShowing={formShowing}
         />
       )}
     </div>

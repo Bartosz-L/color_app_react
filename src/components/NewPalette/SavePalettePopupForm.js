@@ -16,13 +16,10 @@ const SavePalettePopupForm = props => {
     setErrorMessage,
     setOpenSnackbar,
     history,
+    hideForm,
+    formShowing,
   } = props
-  const [open, setOpen] = useState(false)
   const [newPaletteName, setNewPaletteName] = useState('')
-
-  const handleClose = () => {
-    setOpen(false)
-  }
 
   const handleChangeNewPaletteName = e => {
     setNewPaletteName(e.target.value)
@@ -49,34 +46,34 @@ const SavePalettePopupForm = props => {
     }
   }
   return (
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Choose a Palette Name</DialogTitle>
-        <form autoComplete="off" onSubmit={handleSavePalette} name="newPaletteName">
-          <DialogContent>
-            <DialogContentText>
-              Please enter a name for your new palette. Make sure its unique.
-            </DialogContentText>
-            <TextField
-              id="newPaletteName"
-              label="palette name"
-              className={classes.textField}
-              value={newPaletteName}
-              onChange={handleChangeNewPaletteName}
-              margin="normal"
-              fullWidth
-              required
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button type="submit" variant="contained" color="primary">
-              Save Palette
-            </Button>
-          </DialogActions>
-        </form>
-      </Dialog>
+    <Dialog open={formShowing} onClose={hideForm} aria-labelledby="form-dialog-title">
+      <DialogTitle id="form-dialog-title">Choose a Palette Name</DialogTitle>
+      <form autoComplete="off" onSubmit={handleSavePalette} name="newPaletteName">
+        <DialogContent>
+          <DialogContentText>
+            Please enter a name for your new palette. Make sure its unique.
+          </DialogContentText>
+          <TextField
+            id="newPaletteName"
+            label="palette name"
+            className={classes.textField}
+            value={newPaletteName}
+            onChange={handleChangeNewPaletteName}
+            margin="normal"
+            fullWidth
+            required
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={hideForm} color="primary">
+            Cancel
+          </Button>
+          <Button type="submit" variant="contained" color="primary">
+            Save Palette
+          </Button>
+        </DialogActions>
+      </form>
+    </Dialog>
   )
 }
 
