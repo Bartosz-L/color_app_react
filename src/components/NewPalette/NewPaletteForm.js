@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import { ChromePicker } from 'react-color'
 import useAsyncState from '../../utils/useAsyncState'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
-import { Drawer, Typography, Divider, IconButton, Button, TextField } from '@material-ui/core'
+import { Drawer, Typography, Divider, IconButton, Button } from '@material-ui/core'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import DraggableColorList from './DraggableColorList'
 import ErrorSnackbar from '../Snackbar/Snackbar'
 import arrayMove from 'array-move'
 import PaletteFormNav from './PaletteFormNav'
+import ColorPicker from './ColorPicker'
 
 const drawerWidth = 400
 
@@ -47,10 +47,6 @@ const useStyles = makeStyles(theme => ({
     }),
     marginLeft: 0,
   },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
 }))
 
 const NewPaletteForm = props => {
@@ -63,37 +59,10 @@ const NewPaletteForm = props => {
 
   const classes = useStyles()
   const [open, setOpen] = useState(false)
-  const [currentColor, setCurrentColor] = useAsyncState('teal')
   const [colors, setColors] = useAsyncState(palettes[0].colors)
-  const [newColorName, setNewColorName] = useAsyncState('')
-  const [newPaletteName, setNewPaletteName] = useState('')
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const paletteIsFull = colors.length >= maxColors
-
-  const handleAddNewColor = async e => {
-    e.preventDefault()
-    const newColor = {
-      color: currentColor,
-      name: newColorName,
-    }
-
-    const isColorNameUnique = colors.every(
-      ({ name }) => name.toLowerCase() !== newColor.name.toLowerCase(),
-    )
-    const isColorUnique = colors.every(({ color }) => color !== newColor.color)
-
-    if (isColorNameUnique && isColorUnique) {
-      await setColors([...colors, newColor])
-      await setNewColorName('')
-    } else if (!isColorNameUnique) {
-      setErrorMessage('Name is not unique')
-      setOpenSnackbar(true)
-    } else if (!isColorUnique) {
-      setErrorMessage('Color is already taken')
-      setOpenSnackbar(true)
-    }
-  }
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -101,14 +70,6 @@ const NewPaletteForm = props => {
 
   const handleDrawerClose = () => {
     setOpen(false)
-  }
-
-  const handleChangeNewName = e => {
-    setNewColorName(e.target.value)
-  }
-
-  const handleChangeNewPaletteName = e => {
-    setNewPaletteName(e.target.value)
   }
 
   const handleCloseSnackBar = (e, reason) => {
@@ -120,27 +81,6 @@ const NewPaletteForm = props => {
 
   const handleRemoveBox = colorName => {
     setColors(colors.filter(color => color.name !== colorName))
-  }
-
-  const handleSavePalette = e => {
-    e.preventDefault()
-    let newPName = newPaletteName
-    const isPaletteNameUnique = palettes.every(
-      ({ paletteName }) => paletteName.toLowerCase() !== newPName.toLowerCase(),
-    )
-
-    if (isPaletteNameUnique) {
-      const newPalette = {
-        paletteName: newPName,
-        id: newPName.toLowerCase().replace(/ /g, '-'),
-        colors: colors,
-      }
-      savePalette(newPalette)
-      history.push('/')
-    } else {
-      setErrorMessage('Palette name is not unique')
-      setOpenSnackbar(true)
-    }
   }
 
   const onSortEnd = ({ oldIndex, newIndex }) => {
@@ -165,9 +105,12 @@ const NewPaletteForm = props => {
       <PaletteFormNav
         open={open}
         handleDrawerOpen={handleDrawerOpen}
-        handleSavePalette={handleSavePalette}
-        newPaletteName={newPaletteName}
-        handleChangeNewPaletteName={handleChangeNewPaletteName}
+        palettes={palettes}
+        colors={colors}
+        savePalette={savePalette}
+        setErrorMessage={setErrorMessage}
+        setOpenSnackbar={setOpenSnackbar}
+        history={history}
       />
       <Drawer
         className={classes.drawer}
@@ -201,32 +144,14 @@ const NewPaletteForm = props => {
           </Button>
         </div>
 
-        <ChromePicker
-          color={currentColor}
-          onChangeComplete={newColor => setCurrentColor(newColor.hex)}
+        <ColorPicker
+          paletteIsFull={paletteIsFull}
+          colors={colors}
+          setErrorMessage={setErrorMessage}
+          setOpenSnackbar={setOpenSnackbar}
+          setColors={setColors}
+          classes={classes}
         />
-
-        <form autoComplete="off" onSubmit={handleAddNewColor} name="newColorName">
-          <TextField
-            id="newColorName"
-            label="color name"
-            className={classes.textField}
-            value={newColorName}
-            onChange={handleChangeNewName}
-            margin="normal"
-            required
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            style={{ backgroundColor: paletteIsFull ? 'grey' : currentColor }}
-            type="submit"
-            size="small"
-            disabled={paletteIsFull}
-          >
-            {paletteIsFull ? 'Palette Full' : 'Add Color'}
-          </Button>
-        </form>
       </Drawer>
       <main
         className={clsx(classes.content, {

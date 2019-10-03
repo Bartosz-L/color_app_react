@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
@@ -44,12 +44,41 @@ const useStyles = makeStyles(theme => ({
 const PaletteFormNav = props => {
   const classes = useStyles()
   const {
+    colors,
+    palettes,
     open,
     handleDrawerOpen,
-    handleSavePalette,
-    newPaletteName,
-    handleChangeNewPaletteName,
+    savePalette,
+    setErrorMessage,
+    setOpenSnackbar,
+    history,
   } = props
+  const [newPaletteName, setNewPaletteName] = useState('')
+
+  const handleChangeNewPaletteName = e => {
+    setNewPaletteName(e.target.value)
+  }
+
+  const handleSavePalette = e => {
+    e.preventDefault()
+    let newPName = newPaletteName
+    const isPaletteNameUnique = palettes.every(
+      ({ paletteName }) => paletteName.toLowerCase() !== newPName.toLowerCase(),
+    )
+
+    if (isPaletteNameUnique) {
+      const newPalette = {
+        paletteName: newPName,
+        id: newPName.toLowerCase().replace(/ /g, '-'),
+        colors: colors,
+      }
+      savePalette(newPalette)
+      history.push('/')
+    } else {
+      setErrorMessage('Palette name is not unique')
+      setOpenSnackbar(true)
+    }
+  }
 
   return (
     <div>
