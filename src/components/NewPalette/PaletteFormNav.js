@@ -15,11 +15,17 @@ import MenuIcon from '@material-ui/icons/Menu'
 
 const drawerWidth = 400
 const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+  },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    height: '64px',
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -39,6 +45,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
   },
+  navButtons: {},
 }))
 
 const PaletteFormNav = props => {
@@ -81,7 +88,7 @@ const PaletteFormNav = props => {
   }
 
   return (
-    <div>
+    <div className={classes.root}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -101,8 +108,10 @@ const PaletteFormNav = props => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Persistent drawer
+            Create A Palette
           </Typography>
+        </Toolbar>
+        <div className={classes.navButtons}>
           <form autoComplete="off" onSubmit={handleSavePalette} name="newPaletteName">
             <TextField
               id="newPaletteName"
@@ -122,7 +131,7 @@ const PaletteFormNav = props => {
               Go Back
             </Button>
           </Link>
-        </Toolbar>
+        </div>
       </AppBar>
     </div>
   )

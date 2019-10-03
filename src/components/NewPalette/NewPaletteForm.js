@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
+    height: '100vh',
   },
   drawerPaper: {
     width: drawerWidth,
@@ -26,6 +27,7 @@ const useStyles = makeStyles(theme => ({
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
+    width: '100%',
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
@@ -46,6 +48,25 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: 0,
+  },
+  toolsContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: theme.spacing(3),
+  },
+  tools: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  colorHandlingButtons: {
+    width: '100%',
+  },
+  colorHandlingButton: {
+    width: '50%',
   },
 }))
 
@@ -127,31 +148,42 @@ const NewPaletteForm = props => {
           </IconButton>
         </div>
         <Divider />
+        <div className={classes.toolsContainer}>
+          <div className={classes.tools}>
+            <Typography variant="h4" gutterBottom>
+              Design Your Palette
+            </Typography>
 
-        <Typography variant="h4">Design Your Palette</Typography>
+            <div className={classes.colorHandlingButtons}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={clearColors}
+                className={classes.colorHandlingButton}
+              >
+                Clear Palette
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={addRandomColor}
+                disabled={paletteIsFull}
+                className={classes.colorHandlingButton}
+              >
+                Random Color
+              </Button>
+            </div>
 
-        <div>
-          <Button variant="contained" color="secondary" onClick={clearColors}>
-            Clear Palette
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={addRandomColor}
-            disabled={paletteIsFull}
-          >
-            Random Color
-          </Button>
+            <ColorPicker
+              paletteIsFull={paletteIsFull}
+              colors={colors}
+              setErrorMessage={setErrorMessage}
+              setOpenSnackbar={setOpenSnackbar}
+              setColors={setColors}
+              classes={classes}
+            />
+          </div>
         </div>
-
-        <ColorPicker
-          paletteIsFull={paletteIsFull}
-          colors={colors}
-          setErrorMessage={setErrorMessage}
-          setOpenSnackbar={setOpenSnackbar}
-          setColors={setColors}
-          classes={classes}
-        />
       </Drawer>
       <main
         className={clsx(classes.content, {

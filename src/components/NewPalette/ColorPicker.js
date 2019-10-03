@@ -5,9 +5,19 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Button, TextField } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
+  picker: {
+    width: '100% !important',
+    marginTop: '2rem',
+  },
+  addColor: {
+    width: '100%',
+    padding: '1rem',
+    marginTop: '0.5rem',
+    fontSize: '1rem',
+  },
+  colorNameInput: {
+    width: '100%',
+    height: '70px',
   },
 }))
 
@@ -50,25 +60,28 @@ const ColorPicker = props => {
       <ChromePicker
         color={currentColor}
         onChangeComplete={newColor => setCurrentColor(newColor.hex)}
+        className={classes.picker}
       />
 
       <form autoComplete="off" onSubmit={handleAddNewColor} name="newColorName">
         <TextField
           id="newColorName"
           label="color name"
-          className={classes.textField}
           value={newColorName}
           onChange={handleChangeNewName}
           margin="normal"
+          variant="filled"
           required
+          className={classes.colorNameInput}
         />
         <Button
           variant="contained"
           color="primary"
-          style={{ backgroundColor: paletteIsFull ? 'grey' : currentColor }}
           type="submit"
           size="small"
           disabled={paletteIsFull}
+          className={classes.addColor}
+          style={{ backgroundColor: paletteIsFull ? 'grey' : currentColor }}
         >
           {paletteIsFull ? 'Palette Full' : 'Add Color'}
         </Button>
