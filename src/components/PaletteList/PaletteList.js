@@ -9,6 +9,7 @@ const PaletteList = props => {
     palettes,
     classes,
     routerProps: { history },
+    deletePalette,
   } = props
 
   const goToPalette = id => {
@@ -25,11 +26,13 @@ const PaletteList = props => {
         <div className={classes.palettes}>
           {palettes.map(palette => (
             <MiniPalette
+              key={palette.id}
+              id={palette.id}
               paletteName={palette.paletteName}
               emoji={palette.emoji}
               colors={palette.colors}
               goToPalette={() => goToPalette(palette.id)}
-              key={palette.id}
+              deletePalette={deletePalette}
             />
           ))}
         </div>

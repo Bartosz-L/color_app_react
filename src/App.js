@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Palette from './components/Palette/Palette'
 import PaletteList from './components/PaletteList/PaletteList'
@@ -8,7 +8,8 @@ import seedColors from './seedColors'
 import { generatePalette } from './utils/colorHelpers'
 
 const App = () => {
-  const [palettes, setPalettes] = useState(seedColors)
+  let savedPalettes = JSON.parse(window.localStorage.getItem('palettes'))
+  const [palettes, setPalettes] = useState(savedPalettes || seedColors)
 
   const findPalette = id => {
     return palettes.find(palette => {
@@ -16,9 +17,23 @@ const App = () => {
     })
   }
 
+  const syncLocalStorage = () => {
+    window.localStorage.setItem('palettes', JSON.stringify(palettes))
+  }
+
   const savePalette = newPalette => {
     setPalettes([...palettes, newPalette])
   }
+
+  const deletePalette = id => {
+    setPalettes(palettes.filter(palette => palette.id !== id))
+  }
+
+  useEffect(() => {
+    syncLocalStorage()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [palettes])
+
   return (
     <Router>
       <Switch>
@@ -36,7 +51,13 @@ const App = () => {
         <Route
           exact
           path="/"
-          render={routeProps => <PaletteList palettes={palettes} routerProps={routeProps} />}
+          render={routeProps => (
+            <PaletteList
+              palettes={palettes}
+              routerProps={routeProps}
+              deletePalette={deletePalette}
+            />
+          )}
         />
         <Route
           exact
