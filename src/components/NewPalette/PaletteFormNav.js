@@ -117,7 +117,6 @@ const PaletteFormNav = props => {
           setOpenSnackbar={setOpenSnackbar}
           history={history}
           hideForm={hideForm}
-          formShowing={formShowing}
         />
       )}
     </div>
