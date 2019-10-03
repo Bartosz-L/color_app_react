@@ -1,17 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
-import {
-  CssBaseline,
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  Button,
-  TextField,
-} from '@material-ui/core'
+import { CssBaseline, AppBar, Toolbar, Typography, IconButton, Button } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
+import SavePalettePopupForm from './SavePalettePopupForm'
 
 const drawerWidth = 400
 const useStyles = makeStyles(theme => ({
@@ -60,32 +53,6 @@ const PaletteFormNav = props => {
     setOpenSnackbar,
     history,
   } = props
-  const [newPaletteName, setNewPaletteName] = useState('')
-
-  const handleChangeNewPaletteName = e => {
-    setNewPaletteName(e.target.value)
-  }
-
-  const handleSavePalette = e => {
-    e.preventDefault()
-    let newPName = newPaletteName
-    const isPaletteNameUnique = palettes.every(
-      ({ paletteName }) => paletteName.toLowerCase() !== newPName.toLowerCase(),
-    )
-
-    if (isPaletteNameUnique) {
-      const newPalette = {
-        paletteName: newPName,
-        id: newPName.toLowerCase().replace(/ /g, '-'),
-        colors: colors,
-      }
-      savePalette(newPalette)
-      history.push('/')
-    } else {
-      setErrorMessage('Palette name is not unique')
-      setOpenSnackbar(true)
-    }
-  }
 
   return (
     <div className={classes.root}>
@@ -112,20 +79,15 @@ const PaletteFormNav = props => {
           </Typography>
         </Toolbar>
         <div className={classes.navButtons}>
-          <form autoComplete="off" onSubmit={handleSavePalette} name="newPaletteName">
-            <TextField
-              id="newPaletteName"
-              label="palette name"
-              className={classes.textField}
-              value={newPaletteName}
-              onChange={handleChangeNewPaletteName}
-              margin="normal"
-              required
-            />
-            <Button type="submit" variant="contained" color="primary">
-              Save Palette
-            </Button>
-          </form>
+          <SavePalettePopupForm
+            classes={classes}
+            colors={colors}
+            palettes={palettes}
+            savePalette={savePalette}
+            setErrorMessage={setErrorMessage}
+            setOpenSnackbar={setOpenSnackbar}
+            history={history}
+          />
           <Link to="/">
             <Button type="button" variant="contained" color="secondary">
               Go Back
