@@ -8,13 +8,17 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 
 const SavePalettePopupForm = props => {
-  const { classes, colors, palettes, savePalette, setErrorMessage, setOpenSnackbar, history } = props
+  const {
+    classes,
+    colors,
+    palettes,
+    savePalette,
+    setErrorMessage,
+    setOpenSnackbar,
+    history,
+  } = props
   const [open, setOpen] = useState(false)
   const [newPaletteName, setNewPaletteName] = useState('')
-
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
 
   const handleClose = () => {
     setOpen(false)
@@ -45,18 +49,13 @@ const SavePalettePopupForm = props => {
     }
   }
   return (
-    <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open form dialog
-      </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here. We will send updates
-            occasionally.
-          </DialogContentText>
-          <form autoComplete="off" onSubmit={handleSavePalette} name="newPaletteName">
+        <DialogTitle id="form-dialog-title">Choose a Palette Name</DialogTitle>
+        <form autoComplete="off" onSubmit={handleSavePalette} name="newPaletteName">
+          <DialogContent>
+            <DialogContentText>
+              Please enter a name for your new palette. Make sure its unique.
+            </DialogContentText>
             <TextField
               id="newPaletteName"
               label="palette name"
@@ -64,23 +63,20 @@ const SavePalettePopupForm = props => {
               value={newPaletteName}
               onChange={handleChangeNewPaletteName}
               margin="normal"
+              fullWidth
               required
             />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
             <Button type="submit" variant="contained" color="primary">
               Save Palette
             </Button>
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleClose} color="primary">
-            Subscribe
-          </Button>
-        </DialogActions>
+          </DialogActions>
+        </form>
       </Dialog>
-    </div>
   )
 }
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
     }),
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     height: '64px',
   },
   appBarShift: {
@@ -38,7 +39,15 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
   },
-  navButtons: {},
+  navButtons: {
+    marginRight: theme.spacing(1),
+    '& a': {
+      textDecoration: 'none',
+    },
+  },
+  button: {
+    margin: '0 0.5rem',
+  },
 }))
 
 const PaletteFormNav = props => {
@@ -53,6 +62,10 @@ const PaletteFormNav = props => {
     setOpenSnackbar,
     history,
   } = props
+  const [formShowing, setFormShowing] = useState(false)
+  const showForm = () => {
+    setFormShowing(true)
+  }
 
   return (
     <div className={classes.root}>
@@ -79,22 +92,27 @@ const PaletteFormNav = props => {
           </Typography>
         </Toolbar>
         <div className={classes.navButtons}>
-          <SavePalettePopupForm
-            classes={classes}
-            colors={colors}
-            palettes={palettes}
-            savePalette={savePalette}
-            setErrorMessage={setErrorMessage}
-            setOpenSnackbar={setOpenSnackbar}
-            history={history}
-          />
           <Link to="/">
-            <Button type="button" variant="contained" color="secondary">
+            <Button type="button" variant="contained" color="secondary" className={classes.button}>
               Go Back
             </Button>
           </Link>
+          <Button variant="contained" color="primary" onClick={showForm} className={classes.button}>
+            Save Palette
+          </Button>
         </div>
       </AppBar>
+      {formShowing && (
+        <SavePalettePopupForm
+          classes={classes}
+          colors={colors}
+          palettes={palettes}
+          savePalette={savePalette}
+          setErrorMessage={setErrorMessage}
+          setOpenSnackbar={setOpenSnackbar}
+          history={history}
+        />
+      )}
     </div>
   )
 }
