@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { withStyles } from '@material-ui/styles'
 import useAsyncState from '../../utils/useAsyncState'
-import styles from '../../styles/colorBox.styles'
+import styles from '../../styles/ColorBox.styles'
 
 const ColorBox = props => {
   const [copied, setCopied] = useAsyncState(false)

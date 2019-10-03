@@ -1,25 +1,8 @@
 import React from 'react'
 import useAsyncState from '../../utils/useAsyncState'
 import { ChromePicker } from 'react-color'
-import { makeStyles } from '@material-ui/core/styles'
 import { Button, TextField } from '@material-ui/core'
-
-const useStyles = makeStyles(theme => ({
-  picker: {
-    width: '100% !important',
-    marginTop: '2rem',
-  },
-  addColor: {
-    width: '100%',
-    padding: '1rem',
-    marginTop: '0.5rem',
-    fontSize: '1rem',
-  },
-  colorNameInput: {
-    width: '100%',
-    height: '70px',
-  },
-}))
+import useStyles from '../../styles/ColorPicker.styles'
 
 const ColorPicker = props => {
   const { paletteIsFull, colors, setColors, setErrorMessage, setOpenSnackbar } = props
