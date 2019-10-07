@@ -46,6 +46,7 @@ const SavePalettePopupForm = props => {
         emoji: emoji.native,
       }
       savePalette(newPalette)
+      setStage('')
       history.push('/')
     } else {
       setErrorMessage('Palette name is not unique')

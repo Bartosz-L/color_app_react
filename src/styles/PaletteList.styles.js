@@ -6,10 +6,10 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles(theme => ({
   '@global': {
     '.fade-exit': {
-      opacity: 1,
+      opacity: '1',
     },
     '.fade-exit-active': {
-      opacity: 0,
+      opacity: '0',
       transition: 'opacity 300ms ease-out',
     },
   },
