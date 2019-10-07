@@ -136,6 +136,7 @@ const NewPaletteForm = props => {
           handleRemoveBox={handleRemoveBox}
           axis="xy"
           onSortEnd={onSortEnd}
+          distance={20}
         />
         <ErrorSnackbar
           open={openSnackbar}
