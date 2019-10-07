@@ -42,6 +42,7 @@ export default {
   palettes: {
     boxSizing: 'border-box',
     width: '100%',
+    marginBottom: '1.5rem',
     display: 'grid',
     gridTemplateColumns: 'repeat(3, 30%)',
     gridGap: '2.5rem',
