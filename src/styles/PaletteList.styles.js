@@ -1,7 +1,9 @@
 import sizes from './sizes'
 import svgBackground from './Quantum-Gradient.svg'
+import { green, red } from '@material-ui/core/colors'
+import { makeStyles } from '@material-ui/core/styles'
 
-export default {
+const useStyles = makeStyles(theme => ({
   '@global': {
     '.fade-exit': {
       opacity: 1,
@@ -64,4 +66,14 @@ export default {
       gridGap: '1.4rem',
     },
   },
-}
+  confirm: {
+    backgroundColor: green[100],
+    color: green[600],
+  },
+  cancel: {
+    backgroundColor: red[100],
+    color: red[600],
+  },
+}))
+
+export default useStyles
