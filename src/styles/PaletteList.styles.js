@@ -1,12 +1,18 @@
 import sizes from './sizes'
+import svgBackground from './Quantum-Gradient.svg'
 
 export default {
   root: {
-    backgroundColor: 'white',
     height: '100vh',
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'center',
+    backgroundColor: '#ff0000',
+    backgroundImage: `url(${svgBackground})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    /* background by SVGBackgrounds.com */
+    overflowY: 'scroll',
   },
   container: {
     width: '70%',
@@ -22,11 +28,15 @@ export default {
     display: 'flex',
     width: '100%',
     justifyContent: 'space-between',
-    color: 'rgba(0,0,0,0.7)',
+    color: 'white',
     alignItems: 'center',
     '& a': {
       textDecoration: 'none',
-      color: 'rgba(0,0,0,0.5)',
+      color: 'white',
+      fontWeight: 'bold',
+      '&:hover': {
+        color: 'rgba(0,0,0, 0.5)',
+      },
     },
   },
   palettes: {
@@ -41,7 +51,7 @@ export default {
     },
     [sizes.down('xs')]: {
       gridTemplateColumns: 'repeat(1, 100%)',
-      gridGap: '1rem',
+      gridGap: '1.4rem',
     },
   },
 }
