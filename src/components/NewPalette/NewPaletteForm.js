@@ -1,9 +1,10 @@
-import { Button,Divider, Drawer, IconButton, Typography } from '@material-ui/core'
+import { Button, Divider, Drawer, IconButton, Typography } from '@material-ui/core'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import arrayMove from 'array-move'
 import clsx from 'clsx'
 import React, { useState } from 'react'
 
+import seedColors from '../../seedColors'
 import useStyles from '../../styles/NewPaletteForm.styles'
 import useAsyncState from '../../utils/useAsyncState'
 import ErrorSnackbar from '../Snackbar/Snackbar'
@@ -21,7 +22,7 @@ const NewPaletteForm = props => {
 
   const classes = useStyles()
   const [open, setOpen] = useState(false)
-  const [colors, setColors] = useAsyncState(palettes[0].colors)
+  const [colors, setColors] = useAsyncState(seedColors[0].colors)
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const paletteIsFull = colors.length >= maxColors
