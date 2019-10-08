@@ -90,6 +90,18 @@ const App = () => {
                     </Page>
                   )}
                 />
+                {/* default path */}
+                <Route
+                  render={routeProps => (
+                    <Page>
+                      <PaletteList
+                        palettes={palettes}
+                        routerProps={routeProps}
+                        deletePalette={deletePalette}
+                      />
+                    </Page>
+                  )}
+                />
               </Switch>
             </CSSTransition>
           </TransitionGroup>
