@@ -1,7 +1,8 @@
-import sizes from './sizes'
-import svgBackground from './Quantum-Gradient.svg'
 import { green, red } from '@material-ui/core/colors'
 import { makeStyles } from '@material-ui/core/styles'
+
+import svgBackground from './Quantum-Gradient.svg'
+import sizes from './sizes'
 
 const useStyles = makeStyles(theme => ({
   '@global': {

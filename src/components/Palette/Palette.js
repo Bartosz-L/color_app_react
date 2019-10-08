@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
 import { withStyles } from '@material-ui/styles'
-import ColorBox from '../ColorBox/ColorBox'
-import Navbar from '../Navbar/Navbar'
-import Footer from '../Footer/Footer'
+import React, { useState } from 'react'
+
 import styles from '../../styles/Palette.styles'
+import ColorBox from '../ColorBox/ColorBox'
+import Footer from '../Footer/Footer'
+import Navbar from '../Navbar/Navbar'
 
 const Palette = props => {
   const [level, setLevel] = useState(500)

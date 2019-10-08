@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/styles'
-import ColorBox from '../ColorBox/ColorBox'
-import Navbar from '../Navbar/Navbar'
-import Footer from '../Footer/Footer'
+import React, { useEffect,useState } from 'react'
+import { Link } from 'react-router-dom'
+
 import styles from '../../styles/Palette.styles'
+import ColorBox from '../ColorBox/ColorBox'
+import Footer from '../Footer/Footer'
+import Navbar from '../Navbar/Navbar'
 
 const SingleColorPalette = props => {
   const [shades, setShades] = useState([])

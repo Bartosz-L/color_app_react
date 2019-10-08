@@ -1,18 +1,19 @@
-import React from 'react'
-import useAsyncState from '../../utils/useAsyncState'
-import { Link } from 'react-router-dom'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import Avatar from '@material-ui/core/Avatar'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import MiniPalette from '../MiniPalette/MiniPalette'
-import Avatar from '@material-ui/core/Avatar'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import ListItemText from '@material-ui/core/ListItemText'
-import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
+import CloseIcon from '@material-ui/icons/Close'
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
+
 import useStyles from '../../styles/PaletteList.styles'
+import useAsyncState from '../../utils/useAsyncState'
+import MiniPalette from '../MiniPalette/MiniPalette'
 
 const PaletteList = props => {
   const [openDeleteDialog, setOpenDeleteDialog] = useAsyncState(false)

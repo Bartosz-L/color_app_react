@@ -1,9 +1,11 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { withStyles } from '@material-ui/styles'
-import useAsyncState from '../../utils/useAsyncState'
+import clsx from 'clsx'
+import React from 'react'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { Link } from 'react-router-dom'
+
 import styles from '../../styles/ColorBox.styles'
+import useAsyncState from '../../utils/useAsyncState'
 
 const ColorBox = props => {
   const [copied, setCopied] = useAsyncState(false)
@@ -21,9 +23,15 @@ const ColorBox = props => {
       <div style={{ background }} className={classes.ColorBox}>
         <div
           style={{ background }}
-          className={`${classes.copyOverlay} ${copied && classes.showOverlay}`}
+          className={clsx(classes.copyOverlay, {
+            [classes.showOverlay]: copied,
+          })}
         />
-        <div className={`${classes.copyMessage} ${copied && classes.showMessage}`}>
+        <div
+          className={clsx(classes.copyMessage, {
+            [classes.showMessage]: copied,
+          })}
+        >
           <h1>copied!</h1>
           <p className={classes.copyText}>{background}</p>
         </div>

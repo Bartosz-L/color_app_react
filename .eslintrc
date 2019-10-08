@@ -1,6 +1,6 @@
 {
   "extends": ["eslint:recommended", "prettier", "prettier/react", "plugin:react/recommended"],
-  "plugins": ["react-hooks", "import", "jsx-a11y", "react"],
+  "plugins": ["react-hooks", "import", "jsx-a11y", "react", "simple-import-sort"],
   "parser": "babel-eslint",
   "env": {
     "es6": true,
@@ -24,7 +24,13 @@
     "react/prop-types": 0,
     "react/destructuring-assignment": 0,
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "sort-imports": "off",
+    "import/order": "off",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+    "simple-import-sort/sort": "error"
   },
   "settings": {
     "react": {

@@ -1,10 +1,11 @@
+import { AppBar, Button,CssBaseline, IconButton, Toolbar, Typography } from '@material-ui/core'
+import MenuIcon from '@material-ui/icons/Menu'
+import clsx from 'clsx'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import clsx from 'clsx'
-import { CssBaseline, AppBar, Toolbar, Typography, IconButton, Button } from '@material-ui/core'
-import MenuIcon from '@material-ui/icons/Menu'
-import SavePalettePopupForm from './SavePalettePopupForm'
+
 import useStyles from '../../styles/PaletteFormNav.styles'
+import SavePalettePopupForm from './SavePalettePopupForm'
 
 const PaletteFormNav = props => {
   const classes = useStyles()

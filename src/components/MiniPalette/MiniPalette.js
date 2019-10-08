@@ -1,7 +1,8 @@
-import React from 'react'
-import { withStyles } from '@material-ui/styles'
-import styles from '../../styles/MiniPalette.styles'
 import DeleteIcon from '@material-ui/icons/Delete'
+import { withStyles } from '@material-ui/styles'
+import React from 'react'
+
+import styles from '../../styles/MiniPalette.styles'
 
 const MiniPalette = props => {
   const { classes, paletteName, emoji, colors, goToPalette, openDialog, id } = props

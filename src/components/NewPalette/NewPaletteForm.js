@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
-import useAsyncState from '../../utils/useAsyncState'
-import clsx from 'clsx'
-import { Drawer, Typography, Divider, IconButton, Button } from '@material-ui/core'
+import { Button,Divider, Drawer, IconButton, Typography } from '@material-ui/core'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import DraggableColorList from './DraggableColorList'
-import ErrorSnackbar from '../Snackbar/Snackbar'
 import arrayMove from 'array-move'
-import PaletteFormNav from './PaletteFormNav'
-import ColorPicker from './ColorPicker'
+import clsx from 'clsx'
+import React, { useState } from 'react'
+
 import useStyles from '../../styles/NewPaletteForm.styles'
+import useAsyncState from '../../utils/useAsyncState'
+import ErrorSnackbar from '../Snackbar/Snackbar'
+import ColorPicker from './ColorPicker'
+import DraggableColorList from './DraggableColorList'
+import PaletteFormNav from './PaletteFormNav'
 
 const NewPaletteForm = props => {
   const {

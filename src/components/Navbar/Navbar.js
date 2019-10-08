@@ -1,12 +1,14 @@
-import React from 'react'
-import Slider from 'rc-slider'
-import { Link } from 'react-router-dom'
-import { Select, MenuItem, Snackbar, IconButton } from '@material-ui/core'
+import 'rc-slider/assets/index.css'
+
+import { IconButton,MenuItem, Select, Snackbar } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import { withStyles } from '@material-ui/styles'
-import 'rc-slider/assets/index.css'
-import useAsyncState from '../../utils/useAsyncState'
+import Slider from 'rc-slider'
+import React from 'react'
+import { Link } from 'react-router-dom'
+
 import styles from '../../styles/Navbar.styles'
+import useAsyncState from '../../utils/useAsyncState'
 
 const Navbar = props => {
   const [colorFormat, setColorFormat] = useAsyncState('hex')

@@ -1,4 +1,5 @@
 import chroma from 'chroma-js'
+
 import sizes from './sizes'
 
 export default {

@@ -1,5 +1,6 @@
-import React from 'react'
 import { withStyles } from '@material-ui/styles'
+import React from 'react'
+
 import styles from '../../styles/Footer.styles'
 
 const Footer = props => {

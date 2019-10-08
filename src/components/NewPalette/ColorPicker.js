@@ -1,8 +1,9 @@
-import React from 'react'
-import useAsyncState from '../../utils/useAsyncState'
-import { ChromePicker } from 'react-color'
 import { Button, TextField } from '@material-ui/core'
+import React from 'react'
+import { ChromePicker } from 'react-color'
+
 import useStyles from '../../styles/ColorPicker.styles'
+import useAsyncState from '../../utils/useAsyncState'
 
 const ColorPicker = props => {
   const { paletteIsFull, colors, setColors, setErrorMessage, setOpenSnackbar } = props
